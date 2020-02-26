@@ -12,8 +12,8 @@ Pour obtenir les familles sans essayer de comprendre le code, aller à la fin de
 Ne pas oublier de mettre 'individual.py' dans le même dossier afin de pouvoir l'importer """
 
 class Individual():
+    #constructeur :
     def __init__(self, nom, reponses, famille):
-#        self.id_number = id_number
         self.nom = nom
         self.reponses = reponses[:-1]
         self.famille=-1
@@ -25,6 +25,7 @@ class Individual():
         self.partner = None
         self.moy_lovesc=-1
 
+    #Fonction de copie :
     def copiage(self):
         cop=Individual("",[],[])
         cop.nom = self.nom
@@ -36,46 +37,10 @@ class Individual():
         cop.moy_lovesc= -1
         return(cop)
 
-#    def get_priority(self, other):
-#        """Get the priority of a match from the perspective of the current
-#        person.
-#
-#        Args:
-#            other: The other person in the prospective match.
-#
-#        Returns:
-#            An index indicating the priority of a match.
-#            Lower numbers indicate higher priorities.
-#        """
-#        return self.preference_list.index(other)
-#
-#    def get_id_list(self, instance_list):
-#        """Get a list of ID numbers corresponding to the input
-#        list of from xlwt import easyxfinstances.
-#
-#        Args:
-#            intance_list: A list of other Individual objects.
-#
-#        Returns:
-#            A list of ID numbers.
-#        """= []
-#        for i in instance_list:
-#            id_list.append(i.nom if i else None)
-#        return id_list
-
         """Si ça marche pas, peut être que dé-commenter la section ci-dessus résolvera le problème
         (idem que pour la classe MarriagesSimulation, je me sers pas de tout mais je me rapelle plus si ce dont
         je me sert plus je peux le supprimer ou pas, donc je l'ai commenté au cas ou)"""
 
-    # def __str__(self):
-    #     output = ('nom={0} preference_list={1} available_proposals={2} '
-    #               'partner={3}'.format(
-    #                  self.nom,
-    #                  self.get_id_list(self.preference_list),
-    #                  self.get_id_list(self.available_proposals),
-    #                  self.partner.nom if self.partner else None))
-    #     return output
-    def __str__(self):
         output = ('nom={0}   '
                   'partner={1}'.format(
                      self.nom,
@@ -83,6 +48,9 @@ class Individual():
         return output
 
 
+## Lovescore
+
+#On configure un tableau pour pondérer les réponses :
 ponde = [4,2,1,1,2,2,1,1,3,6,3,15,7] #A modifier selon l'ordre des questions
 
 def moyenne(l):
@@ -91,7 +59,7 @@ def moyenne(l):
         s+=x
     return(s/len(l))
 
-def LoveScore(Romeo,Juliet,p=ponde): #On configure un tableau pour pondérer les réponses
+def LoveScore(Romeo,Juliet,p=ponde):
     r1,r2=Romeo.reponses, Juliet.reponses
     nbReponses = len(r1)
     s=0
@@ -129,10 +97,11 @@ def LoveScore(Romeo,Juliet,p=ponde): #On configure un tableau pour pondérer les
                 s+=2*p[k]
         else:
             s+=abs(r1[k]-r2[k])*p[k] #Si ils répondent la même chose 0 points, plus il y a de points au total moins le match est bon
-    #print(Juliet.nom,"---",Romeo.nom,"->",s)
     return (max(s,0))
 
 #Modifier la fonction LoveScore si jamais le système de notation n'est pas satsfaisant
+
+## Marriage
 
 class MarriagesSimulation():
     """A simulation of men and women being matched with the Gale-Shapley
@@ -140,6 +109,8 @@ class MarriagesSimulation():
     """Ca je l'ai pris sur internet (flemme de faire un truc qui existe déjà) du coup comme j'ai modifié
     le reste de l'algo il y a des sections de MarriagesSimulation qui servent plus, mais comme ça fait
     longtemps je me rappelle plus si je peux les supprimer sans tout faire buger ou pas, du coup je laisse"""
+
+    #Constructeur :
     def __init__(self, men,women):
         """Initialize the fundamental components of the simulation.
 
@@ -157,6 +128,7 @@ class MarriagesSimulation():
                 fammax=man.famille
         self.fmax=fammax
 
+    #Fusion de deux mariage
     def merge(self,M2):
         self.men+=M2.men
         self.women+=M2.women
@@ -164,21 +136,21 @@ class MarriagesSimulation():
         self.sizew+=M2.sizew
         self.fmax=max(M2.fmax,self.fmax)
 
+
     def debut(self):
         """Pour remplir les available_proposals"""
         for i in self.men:
-            #i.available_proposals=deepcopy(self.women)
             i.available_proposals=self.women
 
+    #Renvoie le nombre de parrain par famille :
     def fam_taille(self):
         taille=[0 for i in range(self.fmax+1)]
         for man in self.men :
             taille[man.famille]+=1
         return(taille)
 
+    #Permet d'ajouter des parrains "fantôme" dans le cas où il y a plus de fillots que de parrains :
     def ajout_p(self):
-        #for i in range(10):
-        #print("###### AJOUT ######")
         taille=self.fam_taille()
         nb_ajout=0
         men=[]
@@ -188,7 +160,6 @@ class MarriagesSimulation():
                 man=self.men[0]
                 while man.famille!=i:
                     k+=1
-                    #print(k)
                     man=self.men[k]
                 new=man.copiage()
                 men.append(new)
@@ -207,14 +178,11 @@ class MarriagesSimulation():
            simulation."""
         self.Moy_lovscore()
         women=self.tri_lovesc_women()
-        #women=self.random_woman_list()
         for man in self.men:
             man.preference_list =[self.women[x[0]] for x in women]
-            #man.preference_list = self.random_woman_list()
             man.available_proposals =man.preference_list
-        # for woman in self.women:
-        #     woman.preference_list = self.random_man_list()
 
+    #Calcul de la moyenne de Lovescore pour chaque individu :
     def Moy_lovscore(self):
         echantw=[i for i in range(self.sizew)]
         echant=[i for i in range(self.size)]
@@ -227,33 +195,33 @@ class MarriagesSimulation():
             love=[LoveScore(woman,self.men[echant[i]]) for i in range(self.size)]
             woman.moy_lovesc=moyenne(love)
 
+    #Ordone les parrains par moyenne de Lovescore décroissant:
     def tri_lovesc_men(self):
         a=np.array([])
         type_men=[('pers',type(self.men[1])),('lv_sc',int)]
         men_sorted=np.array([(man,man.moy_lovesc) for man in self.men],dtype=type_men)
         men_sorted=np.sort(men_sorted,order="lv_sc")
-        #men_sorted.reverse()
         return(men_sorted)
 
+    #Ordone les fillots par moyenne de Lovescore décroissant:
     def tri_lovesc_women(self):
         type_women=[('pers',int),('lv_sc',int)]
         women_sorted=(np.array([(i,self.women[i].moy_lovesc) for i in range(self.sizew)],dtype=type_women))
-        #print(women_sorted)
         women_sorted.sort(order="lv_sc")
         women_sorted=women_sorted.tolist()
         women_sorted.reverse()
-        #print(women_sorted)
         return(women_sorted)
 
+    #Calcul le poids(Lovescore cummulé de tous les matchs) total du marriage et les parrains non matché (permet d'évaluer la performance du match):
     def poids(self):
         pds=0
-        n_match=0
+        non_match=0
         for man in self.men:
             if man.partner==None:
-                n_match+=1
+                non_match+=1
             else:
                 pds+= LoveScore(man.partner,man)
-        return(pds,n_match)
+        return(pds,non_match)
 
     def random_id_list(self):
         """Get a randomized list of indexes that may be used to refer to
@@ -327,7 +295,6 @@ class MarriagesSimulation():
         """
         man.partner = woman
         woman.partner = man
-        #print ('New pair man={0} woman={1}'.format(man.nom, woman.nom))
 
     def free_couple(self, man, woman):
         """Free two individuals.
@@ -347,16 +314,10 @@ class MarriagesSimulation():
         """
         iterations = 0
         flts=0
-        #print(self.is_stable())
         while not self.is_stable() and iterations<=100:
-            #for i in range(10):
-                #print("###### MATCH ######")
             iterations += 1
-            #print("On en est à la "+str(iterations)+" fois")
-            #print ('{0}\n'.format(self))
             s=0
             for man in self.men:
-                #print(man.available_proposals)
                 s+=len(man.available_proposals)
                 if not man.partner:
                     for woman in man.available_proposals:
@@ -368,7 +329,7 @@ class MarriagesSimulation():
                             break
                         else:
 
-                            if LoveScore(man,woman) < LoveScore(woman.partner, woman): #juste a remplacer le get_priority par lovescore
+                            if LoveScore(man,woman) < LoveScore(woman.partner, woman):
 
                                 self.free_couple(woman.partner, woman)
                                 self.pair_couple(man, woman)
@@ -376,11 +337,8 @@ class MarriagesSimulation():
                                 break
                             else:
                                 man.available_proposals.remove(woman)
-            #print(self.poids())
-            #print(s/self.size)
         print("nb fillots ----> ", flts)
-        #print ('Matching complete')
-        #print ('iterations={0}'.format(iterations))
+
 
     def famille_liste(self): #récupère la liste des familles inscrites
         F=[]
@@ -389,7 +347,7 @@ class MarriagesSimulation():
                 F.append(man.famille)
         return(F)
 
-
+    #Rempli le Excel avec les familles :
     def ecriture(self):
         wb = xlwt.Workbook('familles.xls') #création d'un fichier excel
         s = wb.add_sheet('A Test Sheet') #on crée une feuill de calcul
@@ -402,7 +360,6 @@ class MarriagesSimulation():
             x=3*i
             for j in range(10):
                 y=10*j
-                #print(Familles_g[(10*i)+j])
                 s.write(y,x+1,(10*i)+j+1,style_entete_d)
                 s.write(y,x,"Nom de la famille : ",style_entete_g)
                 s.write(y+1,x,"Parrains :",style_parrains_ent)
@@ -417,12 +374,9 @@ class MarriagesSimulation():
         # écriture des noms :
         for man in self.men:
             famille=man.famille
-            #print("famille->",famille)
-            #print("parrains :",man.nom)
             x=(famille//10)*3
             y=10*(famille%10)+2+nb_membre_fam[famille]
             if nb_membre_fam[famille]!=6:
-                #print(x)
                 s.write(y,x,man.nom,style_parrains)
                 if man.partner!=None :
                     s.write(y,x+1,man.partner.nom,style_fillots)
@@ -469,10 +423,10 @@ class MarriagesSimulation():
 ## Algo famille
 
 ## Fonctions de lecture fichier
+#Ouverture des feuilles :
 
 parrains=xlrd.open_workbook("Questionnaire Parrain-Fillot (Parrains).xlsx")
 shnp=parrains.sheet_names()
-#print(len(shnp)) #Noms des feuilles
 shp=parrains.sheet_by_name(shnp[1]) #Feuille qui m'interresse
 shfam=parrains.sheet_by_name(shnp[3]) #feuille avec les familles
 shfampers=parrains.sheet_by_name(shnp[2]) #feuille avec les corespondances familles/personnes
@@ -605,11 +559,10 @@ def algo():
     M=MarriagesSimulation(P,F)
     M.set_preferences()
     M.match() #ca va tourner puis afficher les couples en premier Liste1, partenaire=Liste
+    #Ajoute des parrains "fantômes" et refait des matchs dans le cas où il y ait plus de fillots que de parrains
     while M.sizew>M.size:
         nouv_fillots=[]
         a_enlever=[]
-        print("nb_filts tot ----> ",M.sizew)
-        print("nb filts théo ------>",len(M.women))
         for i in range(M.sizew):
             if M.women[i].partner==None:
                 nouv_fillots.append((M.women[i]).copiage())
@@ -617,14 +570,13 @@ def algo():
         for i in range(len(a_enlever)-1,-1,-1):
             inutile=M.women.pop(a_enlever[i])
             M.sizew-=1
-        print("nb_nouv filts ----->",len(nouv_fillots))
         if nouv_fillots!=[]:
             nouv_parr,nbparr=M.ajout_p()
             M2=MarriagesSimulation(nouv_parr,nouv_fillots)
             M2.set_preferences()
             M2.match()
             M.merge(M2)
-    M.ecriture()
+    M.ecriture() #Ecriture dans le Excel
     return(M)
     #, suivi de Liste2, partenaire= Liste1
     #Juste la première liste suffit donc

@@ -1,6 +1,6 @@
 # Parrainage
 
-## Principe de fonctionnement :
+### Principe de fonctionnement :
 
 #Changement à faire :#
 

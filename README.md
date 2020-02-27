@@ -35,18 +35,18 @@
   Deux méthodes ont été envisagées et mises en place : 
     - Demander à chaque famille de se nommer et demander à chacun le nom de sa famille.
     - Demander à chacun avec qui il est dans sa famille.
-   Le problème de la deuxième méthode est que tu peux avoir des situations type : "A est avec B et C, B est avec A et D et C est avec E" et c'est pas facile à démméler (cf document passation sylvain (2)) mais plus facile à automatiser. La première solution evite le problème précédemment mentionnée mais rend l'automatisation plus complexe car aucun putain de connard n'écrit le nom de sa famille pareil. Un système à bas de ILIKE comme en SQL peut être envisagé mais en ce qui me concerne jai regroupé à la main les gens en famille dans une feuille du Excel. 
-   On avait fixé un nombre maximum de personnes par familles (max 6) voir si c'est nescessaire ou pas (ça evite au moins d'avoir des familles à 15 ce qui est paut-être pas opti).
+   Le problème de la deuxième méthode est que tu peux avoir des situations type : "A est avec B et C, B est avec A et D et C est avec E" et c'est pas facile à démêler (cf document passation sylvain (2)) mais plus facile à automatiser. La première solution evite le problème précédemment mentionné mais rend l'automatisation plus complexe car aucun putain de connard n'écrit le nom de sa famille pareil. Un système à base de ILIKE comme en SQL peut être envisagé mais en ce qui me concerne j'ai regroupé à la main les gens en famille dans une feuille de l'Excel. 
+   On avait fixé un nombre maximum de personnes par famille (max 6) voir si c'est nescessaire ou pas (ça évite au moins d'avoir des familles à 15 ce qui est peut-être pas opti).
    
 ### Problèmes rencontrés :
   
   Les trolls : surtout les EI2 qui répondent deux fois avec une réponse full bullshit -> réponse à éliminer
   Les EI2 qui répondent au dernier moment.
   Les familles incomplètes à 2 jours de la soirée de Parrainage.
-  Les gens qui ne mettent que leur nom ou que leur prénom(ex : formulaire au nom de "Lucas").
+  Les gens qui ne mettent que leur nom ou que leur prénom (ex : formulaire au nom de "Lucas").
   Les gens qui envoient deux fois le questionnaire.
   
-## Lien
+## Liens
 
 (1) Lien du drive avec le form : https://drive.google.com/drive/folders/129CfRi_36QOkDQ7FuoclgIY9VYtQA0gB?usp=sharing
 (2) Lien du drive de passation de Sylvain Fox : https://drive.google.com/drive/folders/1DJlrysmoKMvxw-zt983U7WHCANtDRziE?usp=sharing

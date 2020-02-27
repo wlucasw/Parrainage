@@ -1,4 +1,6 @@
-# Parrainage
+# Parrainage 
+
+## Algorithme :
 
 ### Principe de fonctionnement :
 
@@ -19,9 +21,23 @@
 
   La pondération peut toujours être améliorer. On constate nottament que les questions sur les "ters" est peut être trop pondéré.
   D'autre part on constate une grande différence entre les EI1 et les EI2 niveau estimation de la consommation d'alcool (voir form).
+  On constate parfois un phénomène d'hétérogénité entre les fillots important quand les parrains ont des réponses trop différentes.
+  Certaines familles se sont retrouvé avec presque que des fillots étrangers, ce n'est pas nécessairement un problème mais c'est à noter
   
-  
-### Lien
+## Form et excel :
 
-Lien du drive avec le form : https://drive.google.com/drive/folders/129CfRi_36QOkDQ7FuoclgIY9VYtQA0gB?usp=sharing
-Lien du drive de passation de Sylvain Fox : https://drive.google.com/drive/folders/1DJlrysmoKMvxw-zt983U7WHCANtDRziE?usp=sharing
+### Principe de fonctionnement :
+
+  On envoie un form avec quasiment les mêmes questions au EI1(le plus tôt possible à la rentré) et au EI2(avant les grande vacances). On peut modifié la formulation des questions entre les deux forms (ex : "Tu bois ?" se transforme en "Tu comptes boire ?" pour les EI1) mais les réponses à choix multiples doivent rester les mêmes. J'avais rajouté deux questions pour les EI2 : "le nom de leur famille ?", "l'objet qu'ils comptent apporté ?".
+  
+### Regrouper les gens par familles :
+
+  Deux méthodes ont été envisagé et mise en place : 
+    - Demander à chaque famille de se nommer et demander à chacun le nom de sa famille.
+    - Demander à chacun avec qui il est dans sa famille.
+   Le problème de la deuxième méthode
+  
+## Lien
+
+(1) Lien du drive avec le form : https://drive.google.com/drive/folders/129CfRi_36QOkDQ7FuoclgIY9VYtQA0gB?usp=sharing
+(2) Lien du drive de passation de Sylvain Fox : https://drive.google.com/drive/folders/1DJlrysmoKMvxw-zt983U7WHCANtDRziE?usp=sharing
